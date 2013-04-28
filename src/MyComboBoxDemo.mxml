@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" initialize="init(event)"
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			import mx.utils.ObjectProxy;
+			
+			[Bindable]
+			private var myData:ArrayCollection;
+			
+			protected function init(event:FlexEvent):void
+			{
+				if(!myData){
+					myData = new ArrayCollection();
+				}
+				for (var i:int = 0; i < 10; i++) 
+				{
+					myData.addItem(new ObjectProxy({"index":i,"title":"8000000"+i,"des":"姓名"+i}));
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	
+	
+	<s:ComboBox id="cbb" x="168" y="154" restrict="0-9" width="200" labelField="title" dataProvider="{myData}" >
+		
+		<s:itemRenderer>
+			<fx:Component>
+				<s:ItemRenderer width="175" height="20" rollOver="rollOverHandler(event)">
+					
+					<s:states>
+						<s:State name="normal"/>
+						<s:State name="over"/>
+						<s:State name="near"/>
+					</s:states>
+					
+					<fx:Script>
+						<![CDATA[
+							import com.greensock.TweenMax;
+							
+							import mx.events.FlexEvent;
+							
+							import spark.components.DataGroup;
+							import spark.filters.GlowFilter;
+							
+							[Bindable]
+							public var index:int = 0;
+							[Bindable]
+							public var glowFilters:Array = [new GlowFilter(0xebebeb,1,4,4)];
+							
+							protected function itemRendererInitHandler(event:FlexEvent):void
+							{
+								this.addEventListener(MouseEvent.ROLL_OVER,rollOverHandler); 
+							}
+							
+							
+							protected function rollOverHandler(evt:MouseEvent):void{
+								var currItem:ItemRenderer = evt.target as ItemRenderer;
+								var dtGrp:DataGroup;
+								if(!currItem){
+									return;
+								}
+								dtGrp = currItem.parent as DataGroup;
+								if(!dtGrp){
+									return;
+								}
+								var n:int = 6;
+								var uit:Object;
+								for (var i:int = 0; i < dtGrp.numChildren; i++) 
+								{
+									uit = dtGrp.getChildAt(i) as ItemRenderer;
+									if(uit){
+										if(uit.index==itemIndex){
+											trace("set state index "+uit.index+" over");
+											TweenMax.to(uit,0.5,{height:48});
+											uit.setState("over");
+										}else if(Math.abs(uit.index-itemIndex)==1){
+											trace("set state index "+uit.index+" near");
+											TweenMax.to(uit,0.5,{height:36});
+											uit.setState("near");
+										}else{
+											trace("set state index "+uit.index+" normal");
+											TweenMax.to(uit,0.5,{height:20});
+											uit.setState("normal");
+										}
+									}
+									trace(uit.currentState);
+								}
+							}
+							
+							/**
+							 * 设置状态
+							 * 
+							 */
+							public function setState(state:String):void
+							{
+								if(this.currentState==state)
+									return;
+								this.setCurrentState(state);
+							}
+							
+							override public function set data( value:Object ) : void {
+								super.data = value;
+								this.index = value.index;
+								setState("normal");
+							}
+							
+						]]>
+					</fx:Script>
+					
+					<!-- 背景 -->
+					<s:Rect id="bg" top="0" right="0" left="0" bottom="0" alpha="0.95" radiusX="2" radiusY="2" filters="{glowFilters}" >
+						<s:stroke>
+							<s:SolidColorStroke color="#ffffff" alpha.normal="0" alpha="1" weight="1"/>
+						</s:stroke>
+						<s:fill>
+							<s:SolidColor color="0xffffff" alpha="1"/>
+						</s:fill>
+					</s:Rect>
+					<!-- Over背景 -->
+					<s:Rect id="selbg" top="0" right="0" left="0" bottom="0" alpha="0.95" radiusX="2" radiusY="2" filters="{glowFilters}" includeIn="over">
+						<s:stroke>
+							<s:SolidColorStroke color="#0093D1" alpha="1" weight="1"/>
+						</s:stroke>
+						<s:fill>
+							<s:SolidColor color="#3A92D2" alpha="0.75"/>
+						</s:fill>
+					</s:Rect>
+					
+					<s:BitmapImage id="bmpi" left="2" top="2" bottom="2" width="{this.bmpi.height}" filters="{glowFilters}" smooth="true" source="@Embed('grids.png')" />
+					
+					<!-- 内容标签 -->
+					<s:VGroup left="{this.bmpi.width+this.bmpi.x+6}" right="4" top="4" bottom="4" gap="6" verticalAlign="middle" fontSize="16">
+						<s:Label id="lblDes" width="100%" color="#000000" fontFamily="微软雅黑" text="{data.des}" includeIn="over" />
+						<s:Label id="lblTile" width="100%" color="#000000" color.over="#ffffff" fontFamily="微软雅黑" fontWeight="normal" text="{data.title}"/>
+					</s:VGroup>
+				</s:ItemRenderer>
+			</fx:Component>
+		</s:itemRenderer>
+	</s:ComboBox>
+	<!--itemRollOver="itemOverHandler(event)"/>-->
+	
+</s:Application>

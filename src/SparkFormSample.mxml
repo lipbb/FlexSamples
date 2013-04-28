@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   creationComplete="application1_creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	
+	<s:BorderContainer backgroundColor="#ff0000" backgroundAlpha=".3" width="150" height="100%">
+		<s:Form width="100%" height="100%">
+			<s:layout>
+				<s:FormLayout gap="1" clipAndEnableScrolling="true"/>
+			</s:layout>
+			<s:FormItem label="编号：">
+				<s:Label text="1"/>
+			</s:FormItem>
+			<s:FormItem label="名称：">
+				<s:Label text="梨"/>
+			</s:FormItem>
+			<s:FormItem label="介绍：">
+				<s:Label text="提高工作效率5，有效时间1小时。"/>
+			</s:FormItem>
+		</s:Form>
+	</s:BorderContainer>
+</s:Application>

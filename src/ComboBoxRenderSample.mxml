@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   creationComplete="application1_creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.IList;
+			import mx.events.FlexEvent;
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			public function setComboBoxFocus(focus:Boolean, index:int):void
+			{
+				var list:IList = cb.dataProvider;
+				
+				for (var i:int = 0; i < list.length; i++) 
+				{
+					var item:Object = list.getItemAt(i);
+					
+					if(focus)
+					{
+						item.index = index;
+					}
+					else
+					{
+						item.index = -2;
+					}
+				}
+			}
+				
+		]]>
+	</fx:Script>
+	
+	
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	
+	<s:ComboBox id="cb">
+		<s:dataProvider>
+			<s:ArrayCollection>
+				<s:DataItem label="一" index="-2"/>
+				<s:DataItem label="二" index="-2"/>
+				<s:DataItem label="散" index="-2"/>
+				<s:DataItem label="死" index="-2"/>
+				<s:DataItem label="无" index="-2"/>
+				<s:DataItem label="留" index="-2"/>
+				<s:DataItem label="起" index="-2"/>
+				<s:DataItem label="吧" index="-2"/>
+				<s:DataItem label="就" index="-2"/>
+				<s:DataItem label="是" index="-2"/>
+			</s:ArrayCollection>
+		</s:dataProvider>
+		<s:itemRenderer>
+			<fx:Component>
+				<s:ItemRenderer>
+					<fx:Script>
+						<![CDATA[
+							override public function set data(value:Object):void
+							{
+								super.data = value;
+								
+								if(value)
+								{
+									lb1.text = value.label;
+									
+									if(itemIndex == value.index)
+									{
+										lb1.setStyle("fontSize", 24);
+									}
+									else if(Math.abs(itemIndex - value.index) == 1)
+									{
+										lb1.setStyle("fontSize", 18);
+									}
+									else
+									{
+										lb1.setStyle("fontSize", 12);
+									}
+								}
+								else
+								{
+									lb1.text = "";
+								}
+							}
+						]]>
+					</fx:Script>
+					
+					<s:Label id="lb1" width="100%" height="100%" verticalAlign="middle" textAlign="center"
+							 rollOver="outerDocument.setComboBoxFocus(true, itemIndex)"
+							 rollOut="outerDocument.setComboBoxFocus(false, itemIndex)"/>
+				</s:ItemRenderer>
+			</fx:Component>
+		</s:itemRenderer>
+	</s:ComboBox>
+</s:Application>
