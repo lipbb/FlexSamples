@@ -15,6 +15,7 @@
   </compiler>
   <applications>
     <application path="FlexSamples.mxml"/>
+    <application path="LineChartSample.mxml"/>
   </applications>
   <modules/>
   <workers/>

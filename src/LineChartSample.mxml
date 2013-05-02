@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   creationComplete="application1_creationCompleteHandler(event)">
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import flash.globalization.DateTimeFormatter;
+			import flash.globalization.DateTimeStyle;
+			import flash.globalization.LocaleID;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				generateData();
+			}
+			
+			private function generateData():void
+			{
+				var ac:ArrayCollection = new ArrayCollection();
+				var now:Date = new Date();
+				
+				for (var i:int = 0; i < 50; i++) 
+				{
+					var obj:Object = {xField : new Date(now.time + i * 60000), value1 : (5 * Math.random()).toFixed(2)};
+					ac.addItem(obj);
+				}
+				
+				lineChart.dataProvider = ac;
+			}
+			
+			private function dateLabelFunction(categoryValue:Object, previousCategoryValue:Object, axis:CategoryAxis, categoryItem:Object):String
+			{
+				var formatter:DateTimeFormatter = new DateTimeFormatter(LocaleID.DEFAULT, DateTimeStyle.NONE, DateTimeStyle.SHORT);
+				return formatter.format(categoryValue as Date);
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		<mx:SeriesSlide id="seriesSlideEffect" direction="left" duration="1000"/>
+		<mx:SeriesInterpolate id="seriesInterpolateEffect" duration="1000" />
+	</fx:Declarations>
+	<s:Panel title="line chart sample">
+		<mx:LineChart id="lineChart" width="400" height="300" showDataTips="true">
+			<mx:horizontalAxis>
+				<mx:CategoryAxis id="hAxis" categoryField="xField" labelFunction="dateLabelFunction"/>
+			</mx:horizontalAxis>
+			<mx:verticalAxis>
+				<mx:LinearAxis />
+			</mx:verticalAxis>
+			<mx:horizontalAxisRenderers>
+				<!-- labelRotation必须嵌入字体才有用 -->
+				<mx:AxisRenderer id="hAxisRender" labelRotation="90" axis="{hAxis}" canDropLabels="false"/>
+			</mx:horizontalAxisRenderers>
+			<mx:series>
+				<mx:LineSeries yField="value1" showDataEffect="{seriesInterpolateEffect}"/>
+			</mx:series>
+		</mx:LineChart>
+		
+		<s:controlBarContent>
+			<s:Button label="refresh" click="generateData()"/>
+			<s:CheckBox click="hAxisRender.setStyle('canDropLabels', event.currentTarget.selected)" label="canDropLabels"/>
+		</s:controlBarContent>
+		<s:controlBarLayout>
+			<s:HorizontalLayout/>
+		</s:controlBarLayout>
+	</s:Panel>
+</s:Application>
