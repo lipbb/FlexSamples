@@ -26,7 +26,12 @@
 			
 			protected function button1_clickHandler(event:MouseEvent):void
 			{
-				
+				var fi:FormItem = new FormItem();
+				fi.label = 'password';
+				var ti:TextInput = new TextInput();
+				ti.displayAsPassword = true;
+				fi.addElement(ti);
+				form.addElement(fi);
 			}
 			
 		]]>
@@ -47,6 +52,11 @@
 		<s:controlBarContent>
 				<s:Button label="test" click="button1_clickHandler(event)"/>
 		</s:controlBarContent>
+		<s:Form id="form">
+			<s:FormItem label="id">
+				<s:TextInput/>
+			</s:FormItem>
+		</s:Form>
 	</s:Panel>
 	
 </s:Application>
