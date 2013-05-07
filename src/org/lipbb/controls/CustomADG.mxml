@@ -16,7 +16,7 @@
 				{
 					var xml:XML = (listItems[rowIndex][0] as IDataRenderer).data as XML; 
 					
-					if(xml.@label.indexOf('box') != -1)
+					if(xml && xml.@label.indexOf('box') != -1)
 						color = 0x00ff00;
 				}
 				super.drawRowBackground(s, rowIndex, y, height, color, dataIndex);
