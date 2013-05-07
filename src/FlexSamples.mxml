@@ -26,41 +26,21 @@
 			protected function button1_clickHandler(event:MouseEvent):void
 			{
 				var arr:Array = [
-					{id:1, label:"aaa", parent:1},
-					{id:2, label:"bbb", parent:1},
-					{id:3, label:"ccc", parent:2},
-					{id:4, label:"ddd", parent:1},
-					{id:5, label:"eee", parent:4},
+					{id:1, label:"aaa", parent:1, value:"root"},
+					{id:2, label:"bbb", parent:1, value:"branch1"},
+					{id:3, label:"ccc", parent:2, value:"leaf1"},
+					{id:4, label:"ddd", parent:1, value:"branch2"},
+					{id:5, label:"eee", parent:4, value:"leaf2"},
 				];
 				
 				adg.dataProvider = new CustomHierarchicalData(arr);
 				callLater(adg.expandAll);
 			}
 			
-			protected function label1_creationCompleteHandler(event:FlexEvent):void
-			{
-				trace(event.currentTarget.text, "created");
-			}
-			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
-		<fx:XMLList id="treeData">
-			<node label="Mail Box">
-				<node label="Inbox">
-					<node label="Marketing"/>
-					<node label="Product Management"/>
-					<node label="Personal"/>
-				</node>
-				<node label="Outbox">
-					<node label="Professional"/>
-					<node label="Personal"/>
-				</node>
-				<node label="Spam"/>
-				<node label="Sent"/>
-			</node>
-		</fx:XMLList>
 	</fx:Declarations>
 	
 		<fx:Style>
@@ -71,16 +51,18 @@
 	<s:layout>
 		<s:VerticalLayout/>
 	</s:layout>
-	<s:Panel width="100%" height="100%" title="PlotChart Control Example">
+	<s:Panel width="100%" height="100%" title="Common Example">
 		<s:controlBarContent>
-				<s:Button label="test" click="button1_clickHandler(event)"/>
+			<s:Button label="test" click="button1_clickHandler(event)"/>
 		</s:controlBarContent>
 		<s:VGroup width="100%" height="100%">
-			<controls:CustomADG id="adg" width="100%" height="100%" defaultLeafIcon="{null}" disclosureOpenIcon="{null}" folderOpenIcon="{null}">
-				<controls:groupedColumns>
+			<mx:AdvancedDataGrid id="adg" defaultLeafIcon="{null}" disclosureOpenIcon="{null}"
+								 folderOpenIcon="{null}">
+				<mx:columns>
 					<mx:AdvancedDataGridColumn dataField="label" headerText="label"/>
-				</controls:groupedColumns>
-			</controls:CustomADG>
+					<mx:AdvancedDataGridColumn dataField="value" headerText="value"/>
+				</mx:columns>
+			</mx:AdvancedDataGrid>
 		</s:VGroup>
 	</s:Panel>
 	
