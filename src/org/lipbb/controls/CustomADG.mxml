@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:AdvancedDataGrid xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					 xmlns:s="library://ns.adobe.com/flex/spark" 
+					 xmlns:mx="library://ns.adobe.com/flex/mx"
+					 creationComplete="advanceddatagrid1_creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.core.IDataRenderer;
+			import mx.events.FlexEvent;
+			
+			
+			
+			override protected function drawRowBackground(s:Sprite, rowIndex:int, y:Number, height:Number, color:uint, dataIndex:int):void
+			{
+				if(listItems[rowIndex] && listItems[rowIndex][0])
+				{
+					var xml:XML = (listItems[rowIndex][0] as IDataRenderer).data as XML; 
+					
+					if(xml.@label.indexOf('box') != -1)
+						color = 0x00ff00;
+				}
+				super.drawRowBackground(s, rowIndex, y, height, color, dataIndex);
+			}
+			
+			protected function advanceddatagrid1_creationCompleteHandler(event:FlexEvent):void
+			{
+				expandAll();
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		
+	</fx:Declarations>
+</mx:AdvancedDataGrid>

@@ -2,6 +2,7 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:controls="org.lipbb.controls.*"
 			   creationComplete="application1_creationCompleteHandler(event)">
 	<fx:Script>
 		<![CDATA[
@@ -17,27 +18,37 @@
 			
 			protected function application1_creationCompleteHandler(event:FlexEvent):void
 			{
-				var a:int = 1, b:int;
-				b = a;
-				b = 123;
 				
-				trace(a, b);
 			}
 			
 			protected function button1_clickHandler(event:MouseEvent):void
 			{
-				var fi:FormItem = new FormItem();
-				fi.label = 'password';
-				var ti:TextInput = new TextInput();
-				ti.displayAsPassword = true;
-				fi.addElement(ti);
-				form.addElement(fi);
+			}
+			
+			protected function label1_creationCompleteHandler(event:FlexEvent):void
+			{
+				trace(event.currentTarget.text, "created");
 			}
 			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		<fx:XMLList id="treeData">
+			<node label="Mail Box">
+				<node label="Inbox">
+					<node label="Marketing"/>
+					<node label="Product Management"/>
+					<node label="Personal"/>
+				</node>
+				<node label="Outbox">
+					<node label="Professional"/>
+					<node label="Personal"/>
+				</node>
+				<node label="Spam"/>
+				<node label="Sent"/>
+			</node>
+		</fx:XMLList>
 	</fx:Declarations>
 	
 		<fx:Style>
@@ -52,11 +63,16 @@
 		<s:controlBarContent>
 				<s:Button label="test" click="button1_clickHandler(event)"/>
 		</s:controlBarContent>
-		<s:Form id="form">
-			<s:FormItem label="id">
-				<s:TextInput/>
-			</s:FormItem>
-		</s:Form>
+		<s:VGroup width="100%" height="100%">
+			<controls:CustomADG width="100%" height="100%" defaultLeafIcon="{null}" disclosureOpenIcon="{null}" folderOpenIcon="{null}">
+				<controls:dataProvider>
+					<mx:HierarchicalData source="{treeData}"/>
+				</controls:dataProvider>
+				<controls:groupedColumns>
+					<mx:AdvancedDataGridColumn dataField="@label" headerText="label"/>
+				</controls:groupedColumns>
+			</controls:CustomADG>
+		</s:VGroup>
 	</s:Panel>
 	
 </s:Application>
