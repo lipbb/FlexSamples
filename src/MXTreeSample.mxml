@@ -46,6 +46,13 @@
 				<node label="Sent"/>
 			</node>
 		</fx:XMLList>
+		<fx:Array id="flatData">
+			<s:DataItem id="a1" label="aaa" parent=""/>
+			<s:DataItem id="a2" label="bbb" parent="a1"/>
+			<s:DataItem id="a3" label="ccc" parent="a2"/>
+			<s:DataItem id="a4" label="ddd" parent="a1"/>
+			<s:DataItem id="a5" label="eee" parent="a4"/>
+		</fx:Array>
 	</fx:Declarations>
 	
 	<s:Panel width="75%" height="75%" horizontalCenter="0" title="Halo Tree Control Example"
