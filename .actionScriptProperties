@@ -17,6 +17,7 @@
     <application path="FlexSamples.mxml"/>
     <application path="LineChartSample.mxml"/>
     <application path="MXTreeSample.mxml"/>
+    <application path="LoaderSample.mxml"/>
   </applications>
   <modules/>
   <workers/>
