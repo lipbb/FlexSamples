@@ -18,6 +18,7 @@
     <application path="LineChartSample.mxml"/>
     <application path="MXTreeSample.mxml"/>
     <application path="LoaderSample.mxml"/>
+    <application path="ButtonBarSample.mxml"/>
   </applications>
   <modules/>
   <workers/>
