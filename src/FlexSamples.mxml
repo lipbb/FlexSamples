@@ -8,8 +8,8 @@
 		<![CDATA[
 			import mx.collections.ArrayCollection;
 			import mx.events.FlexEvent;
+			import mx.graphics.ImageSnapshot;
 			
-			import org.lipbb.controls.adg.CustomHierarchicalData;
 			
 			[Bindable]
 			private var expensesAC:ArrayCollection = new ArrayCollection( [
@@ -20,21 +20,10 @@
 			
 			protected function application1_creationCompleteHandler(event:FlexEvent):void
 			{
-				
 			}
 			
 			protected function button1_clickHandler(event:MouseEvent):void
 			{
-				var arr:Array = [
-					{id:1, label:"aaa", parent:1, value:"root"},
-					{id:2, label:"bbb", parent:1, value:"branch1"},
-					{id:3, label:"ccc", parent:2, value:"leaf1"},
-					{id:4, label:"ddd", parent:1, value:"branch2"},
-					{id:5, label:"eee", parent:4, value:"leaf2"},
-				];
-				
-				adg.dataProvider = new CustomHierarchicalData(arr);
-				callLater(adg.expandAll);
 			}
 			
 		]]>
@@ -46,6 +35,7 @@
 		<fx:Style>
 		@namespace s "library://ns.adobe.com/flex/spark";
 		@namespace mx "library://ns.adobe.com/flex/mx";
+			
 	</fx:Style>
 	
 	<s:layout>
@@ -56,13 +46,6 @@
 			<s:Button label="test" click="button1_clickHandler(event)"/>
 		</s:controlBarContent>
 		<s:VGroup width="100%" height="100%">
-			<mx:AdvancedDataGrid id="adg" defaultLeafIcon="{null}" disclosureOpenIcon="{null}"
-								 folderOpenIcon="{null}">
-				<mx:columns>
-					<mx:AdvancedDataGridColumn dataField="label" headerText="label"/>
-					<mx:AdvancedDataGridColumn dataField="value" headerText="value"/>
-				</mx:columns>
-			</mx:AdvancedDataGrid>
 		</s:VGroup>
 	</s:Panel>
 	

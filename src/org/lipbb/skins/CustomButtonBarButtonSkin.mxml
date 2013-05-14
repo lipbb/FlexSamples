@@ -46,16 +46,17 @@
             useChromeColor = true;
             super.initializationComplete();
         }
-        
+		
         /**
          * @private
          */
         override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number) : void
         {
             super.updateDisplayList(unscaledWidth, unscaledHeight);
+			
+			maskRect.color = getStyle("parentBackgroundColor");
         }
         
-        private var cornerRadius:Number = 2;
     </fx:Script>
     
     <!-- states -->
@@ -76,9 +77,6 @@
 				<s:Animate target="{box}">
 					<s:SimpleMotionPath property="y" />
 				</s:Animate>
-				<s:AnimateColor target="{bgColor}" >
-					
-				</s:AnimateColor>
 			</s:Parallel>
 		</s:Transition>
 		<s:Transition fromState="*" toState="up">
@@ -86,9 +84,6 @@
 				<s:Animate target="{box}">
 					<s:SimpleMotionPath property="y" />
 				</s:Animate>
-				<s:AnimateColor target="{bgColor}">
-					
-				</s:AnimateColor>
 			</s:Parallel>
 		</s:Transition>
 	</s:transitions>
@@ -108,7 +103,7 @@
 	</s:Path>
 	<s:Rect height="5" left="5" right="5" bottom="0">
 		<s:fill>
-			<s:SolidColor color="white" alpha="1" alpha.up="0"/>
+			<s:SolidColor id="maskRect" color="white" alpha="1" alpha.up="0"/>
 		</s:fill>
 	</s:Rect>
     <s:Group id="box" y="-5" y.up="0">

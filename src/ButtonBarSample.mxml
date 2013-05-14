@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
 			   xmlns:s="library://ns.adobe.com/flex/spark"
-			   xmlns:mx="library://ns.adobe.com/flex/mx">
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   creationComplete="application1_creationCompleteHandler(event)">
 	<fx:Script>
 		<![CDATA[
+			import mx.events.FlexEvent;
+			
 			import spark.events.IndexChangeEvent;
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+//				bar.dataGroup.setStyle("parentBackgroundColor", "red");
+			}
 			
 			protected function bar_changeHandler(event:IndexChangeEvent):void
 			{
-				label.text = "You clicked the button:" + (event.currentTarget as ButtonBar).selectedItem;
+				label1.text = "You clicked the button:" + (event.currentTarget as ButtonBar).selectedItem;
 			}
 			
 		]]>
@@ -17,7 +25,24 @@
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
 	
-	<s:Panel width="100%" height="100%" title="button bar sample">
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		s|ButtonBar s|ToggleButton
+		{
+			/*parentBackgroundColor:red;*/
+		}
+		
+		#panel1 #group1 #label1
+		{
+			color:#00ff00;
+			backgroundColor:#ffffff;
+			fontSize:24;
+		}
+	</fx:Style>
+	
+	<s:Panel id="panel1" width="500" height="400" title="button bar sample" backgroundColor="red"
+			 horizontalCenter="0" verticalCenter="0">
 		<s:layout>
 			<s:VerticalLayout/>
 		</s:layout>
@@ -30,7 +55,8 @@
 				<fx:String>Contact</fx:String>
 			</s:ArrayList>
 		</s:ButtonBar>
-		
-		<s:Label id="label"/>
+		<s:Group id="group1">
+			<s:Label id="label1" text="hello"/>
+		</s:Group>
 	</s:Panel>
 </s:Application>
