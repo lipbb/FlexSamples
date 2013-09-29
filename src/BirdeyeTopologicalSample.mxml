@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark"
+               xmlns:visual="org.un.cava.birdeye.ravis.graphLayout.visual.*">
+    <visual:VisualGraph id="visualGraph" width="100%" height="100%"
+                        itemRenderer="org.un.cava.birdeye.ravis.components.renderers.nodes.SizeByValueNodeRenderer">
+
+    </visual:VisualGraph>
+
+    <s:controlBarContent>
+        <s:HGroup>
+            <s:Button label="reset" click="refresh()"/>
+        </s:HGroup>
+    </s:controlBarContent>
+    <fx:Script><![CDATA[
+        import org.un.cava.birdeye.ravis.components.ui.controls.layouterControls.LayoutSelector;
+        import org.un.cava.birdeye.ravis.graphLayout.data.Graph;
+        import org.un.cava.birdeye.ravis.graphLayout.layout.ParentCenteredRadialLayouter;
+
+        private var hasData:Boolean;
+        private var xmlData:XML;
+
+        private function createData():void {
+            xmlData = <graph/>;
+            for (var j:int = 0; j < 10; j++) {
+                var node:XML = <Node/>
+                node.@id = j + 1;
+                node.@name = j + 1;
+                node.@nodeColor = "0x" + uint(0xffffff * Math.random()).toString(16);
+                node.@nodeSize = 10;
+                if (j == 0) {
+                    node.@nodeIcon = "center";
+                }
+                xmlData.appendChild(node);
+            }
+
+            for (var k:int = 0; k < 9; k++) {
+                var edge:XML = <Edge/>;
+                edge.@fromID = 1;
+                edge.@toID = k + 2;
+                edge.@edgeLabel = "edge" + (k + 2);
+                edge.@color = "0xff0000";
+                xmlData.appendChild(edge);
+            }
+        }
+
+        private function refresh():void {
+            createData();
+            trace(xmlData);
+            var graph:Graph = new Graph("dataFromXML", false, xmlData);
+            visualGraph.graph = graph;
+            visualGraph.layouter = new ParentCenteredRadialLayouter(visualGraph);
+            visualGraph.currentRootVNode = graph.nodeByStringId("1").vnode;
+            var selector:LayoutSelector = new LayoutSelector();
+            selector.vgraph = visualGraph;
+            selector.selectedItem = "ConcentricRadial";
+            selector.changeLayouter();
+
+            visualGraph.draw();
+        }
+        ]]></fx:Script>
+</s:Application>
